@@ -18,6 +18,17 @@ app.use(bodyParser.json()); // JSON to post handler
 // register event listenr
 io.on('connection', (socket) => {
     console.log('New user connected');
+
+    socket.emit('newMessage', { // listen on client side
+        from: 'server',
+        text: 'server emitted event',
+        createdAt: Date.now()
+    });
+
+    socket.on('createMessage', (newMessage) => {
+        console.log('createMessage', newMessage);
+    });
+
     socket.on('disconnect', (socket) => {
         console.log('Client disconnected!');
     });
