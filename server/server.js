@@ -19,14 +19,13 @@ app.use(bodyParser.json()); // JSON to post handler
 io.on('connection', (socket) => {
     console.log('New user connected');
 
-    socket.emit('newMessage', { // listen on client side
-        from: 'server',
-        text: 'server emitted event',
-        createdAt: Date.now()
-    });
-
     socket.on('createMessage', (newMessage) => {
         console.log('createMessage', newMessage);
+        io.emit('newMessage', {
+            from: newMessage.from,
+            text: newMessage.text,
+            createdAt: new Date().getTime()
+        });
     });
 
     socket.on('disconnect', (socket) => {
