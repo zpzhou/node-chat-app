@@ -19,9 +19,21 @@ app.use(bodyParser.json()); // JSON to post handler
 io.on('connection', (socket) => {
     console.log('New user connected');
 
+    socket.emit('newMessage', {
+        from: 'Admin',
+        message: 'Welcome new user!',
+        createdAt: new Date().getTime()
+    });
+    socket.broadcast.emit('newMessage', {
+        from: 'Admin',
+        message: 'A new user has joined the chat room',
+        createdAt: new Date().getTime()
+    });
+
     socket.on('createMessage', (newMessage) => {
         console.log('createMessage', newMessage);
-        io.emit('newMessage', {
+        socket.broadcast.
+        socket.broadcast.emit('newMessage', {
             from: newMessage.from,
             text: newMessage.text,
             createdAt: new Date().getTime()
