@@ -18,6 +18,9 @@ class Users {
     }
     getUser(id) {
         let idx = this.users.findIndex((user) => user.id === id);
+        if (idx === -1) {
+            return null;
+        }
         return this.users[idx];
     }
     getUsersList(room) {
